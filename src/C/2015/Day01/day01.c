@@ -3,8 +3,8 @@
 #include <string.h>
 #include "../../COMMON/loadinput.c"
 
-const char * year = "2015";
-const char * day = "1";
+char * year = "2015";
+char * day = "1";
 
 const char upchar = '(';
 const char dnchar = ')';
