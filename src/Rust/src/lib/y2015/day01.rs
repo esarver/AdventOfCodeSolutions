@@ -1,7 +1,10 @@
-pub fn day01(input: &str) -> i64 {
+pub fn day01(input: &str) {
 
-    let mut santa = Santa::new(None);
+    let mut santa = Santa::new(input.to_string(), None);
 
+    println!("|--- Day 01:");
+    println!("|---|--- Part A: \u{001b}[32m\u{001b}[7m[{}]\u{001b}[0m", santa.final_floor());
+    println!("|---|--- Part B: \u{001b}[32m\u{001b}[7m[{}]\u{001b}[0m", santa.first_at_floor(-1));
 }
 
 trait Movement {
@@ -29,7 +32,9 @@ impl Santa {
         self.current_floor = self.initial_floor;
         self.steps = 0;
 
-        for instruction in self.instructions.chars() {
+        let inst = self.instructions.clone();
+
+        for instruction in inst.chars() {
             match instruction {
                 '(' => self.up(),
                 ')' => self.down(),
@@ -43,7 +48,12 @@ impl Santa {
         self.current_floor = self.initial_floor;
         self.steps = 0;
 
-         for instruction in self.instructions.chars() {
+        let inst = self.instructions.clone();
+
+         for instruction in inst.chars() {
+            if self.current_floor == floor_number {
+                break;
+            }
             match instruction {
                 '(' => self.up(),
                 ')' => self.down(),
@@ -51,19 +61,19 @@ impl Santa {
             }
         }
 
-        {self.steps + 1}
+        {self.steps}
        
     }
 }
 
 impl Movement for Santa {
     fn up(&mut self) {
-        self.floor = self.floor + 1;
+        self.current_floor = self.current_floor + 1;
         self.steps = self.steps + 1;
     }
 
     fn down(&mut self) {
-        self.floor = self.floor - 1;
+        self.current_floor = self.current_floor - 1;
         self.steps = self.steps + 1;
     }
 }
