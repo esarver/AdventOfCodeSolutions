@@ -1,6 +1,6 @@
 pub fn day01(input: &str) -> i64 {
 
-    let mut santa: Santa;
+    let mut santa = Santa::new(None);
 
     for instruction in input.chars() {
         match instruction {
@@ -14,8 +14,8 @@ pub fn day01(input: &str) -> i64 {
 }
 
 trait Movement {
-    fn up(&self);
-    fn down(&self);
+    fn up(&mut self);
+    fn down(&mut self);
 }
 
 struct Santa {
@@ -24,18 +24,24 @@ struct Santa {
 }
 
 impl Santa {
-    fn new(starting_floor: i64 = 0){
+    fn new(starting_floor: Option<i64>) -> Santa {
+        Santa {
+            floor: {starting_floor.unwrap_or(0)},
+            steps: 0,
+        }
 
     }
 }
 
 impl Movement for Santa {
-    fn up(&self) {
+    fn up(&mut self) {
         self.floor = self.floor + 1;
+        self.steps = self.steps + 1;
     }
 
-    fn down(&self) {
+    fn down(&mut self) {
         self.floor = self.floor - 1;
+        self.steps = self.steps + 1;
     }
 }
 
