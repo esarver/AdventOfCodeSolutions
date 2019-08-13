@@ -2,15 +2,6 @@ pub fn day01(input: &str) -> i64 {
 
     let mut santa = Santa::new(None);
 
-    for instruction in input.chars() {
-        match instruction {
-            '(' => santa.up(),
-            ')' => santa.down(),
-            _ => {},
-        }
-    }
-
-    santa.floor
 }
 
 trait Movement {
@@ -19,17 +10,49 @@ trait Movement {
 }
 
 struct Santa {
-    floor: i64,
+    instructions: String,
+    initial_floor: i64,
+    current_floor: i64,
     steps: u64
 }
 
 impl Santa {
-    fn new(starting_floor: Option<i64>) -> Santa {
+    fn new(instructions: String, starting_floor: Option<i64>) -> Santa {
         Santa {
-            floor: {starting_floor.unwrap_or(0)},
+            current_floor: 0,
+            initial_floor: {starting_floor.unwrap_or(0)},
             steps: 0,
+            instructions: instructions,
+        }
+    }
+    fn final_floor(&mut self) -> i64 {
+        self.current_floor = self.initial_floor;
+        self.steps = 0;
+
+        for instruction in self.instructions.chars() {
+            match instruction {
+                '(' => self.up(),
+                ')' => self.down(),
+                _ => {},
+            }
         }
 
+        self.current_floor
+    }
+    fn first_at_floor(&mut self, floor_number: i64) -> u64 {
+        self.current_floor = self.initial_floor;
+        self.steps = 0;
+
+         for instruction in self.instructions.chars() {
+            match instruction {
+                '(' => self.up(),
+                ')' => self.down(),
+                _ => {},
+            }
+        }
+
+        {self.steps + 1}
+       
     }
 }
 
