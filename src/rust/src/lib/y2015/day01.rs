@@ -1,10 +1,12 @@
+use crate::lib::common::logger; 
+
 pub fn day01(input: &str) {
 
     let mut santa = Santa::new(input.to_string(), None);
 
-    println!("|--- Day 01:");
-    println!("|---|--- Part A: \u{001b}[32m\u{001b}[7m[{}]\u{001b}[0m", santa.final_floor());
-    println!("|---|--- Part B: \u{001b}[32m\u{001b}[7m[{}]\u{001b}[0m", santa.first_at_floor(-1));
+    logger::log_day("Day 01");
+    logger::log_answer("Part A", santa.final_floor().to_string().as_str());
+    logger::log_answer("Part B", santa.first_at_floor(-1).to_string().as_str());
 }
 
 trait Movement {
