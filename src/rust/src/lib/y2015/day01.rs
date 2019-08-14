@@ -1,10 +1,24 @@
 use crate::lib::common::logger;
 
 #[test]
-fn final_floor_test() {
+fn final_floor_test_zero() {
     let mut santa = Santa::new("((()))".to_string(), None);
 
     assert_eq!(santa.final_floor(), 0);
+}
+
+#[test]
+fn final_floor_test_positive() {
+    let mut santa = Santa::new("((()))((((".to_string(), None);
+
+    assert_eq!(santa.final_floor(), 4);
+}
+
+#[test]
+fn final_floor_test_negative() {
+    let mut santa = Santa::new("((()))))))))".to_string(), None);
+
+    assert_eq!(santa.final_floor(), -6);
 }
 
 #[test]
