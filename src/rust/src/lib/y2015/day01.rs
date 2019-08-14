@@ -1,7 +1,6 @@
-use crate::lib::common::logger; 
+use crate::lib::common::logger;
 
 pub fn day01(input: &str) {
-
     let mut santa = Santa::new(input.to_string(), None);
 
     logger::log_day("Day 01");
@@ -18,16 +17,16 @@ struct Santa {
     instructions: String,
     initial_floor: i64,
     current_floor: i64,
-    steps: u64
+    steps: u64,
 }
 
 impl Santa {
     fn new(instructions: String, starting_floor: Option<i64>) -> Santa {
         Santa {
             current_floor: 0,
-            initial_floor: {starting_floor.unwrap_or(0)},
+            initial_floor: { starting_floor.unwrap_or(0) },
             steps: 0,
-            instructions: instructions,
+            instructions,
         }
     }
     fn final_floor(&mut self) -> i64 {
@@ -40,7 +39,7 @@ impl Santa {
             match instruction {
                 '(' => self.up(),
                 ')' => self.down(),
-                _ => {},
+                _ => {}
             }
         }
 
@@ -52,19 +51,20 @@ impl Santa {
 
         let inst = self.instructions.clone();
 
-         for instruction in inst.chars() {
+        for instruction in inst.chars() {
             if self.current_floor == floor_number {
                 break;
             }
             match instruction {
                 '(' => self.up(),
                 ')' => self.down(),
-                _ => {},
+                _ => {}
             }
         }
 
-        {self.steps}
-       
+        {
+            self.steps
+        }
     }
 }
 
@@ -79,4 +79,3 @@ impl Movement for Santa {
         self.steps = self.steps + 1;
     }
 }
-
