@@ -1,5 +1,26 @@
 use crate::lib::common::logger;
 
+#[test]
+fn final_floor_test() {
+    let mut santa = Santa::new("((()))".to_string(), None);
+
+    assert_eq!(santa.final_floor(), 0);
+}
+
+#[test]
+fn first_at_floor_test() {
+    let mut santa = Santa::new("((())))".to_string(), None);
+
+    assert_eq!(santa.first_at_floor(-1), 7);
+}
+
+#[test]
+fn first_at_floor_test_extra_steps() {
+    let mut santa = Santa::new("))))".to_string(), None);
+
+    assert_eq!(santa.first_at_floor(-2), 2);
+}
+
 pub fn day01(input: &str) {
     let mut santa = Santa::new(input.to_string(), None);
 
@@ -75,7 +96,7 @@ impl Movement for Santa {
     }
 
     fn down(&mut self) {
-        self.current_floor += 1;
+        self.current_floor -= 1;
         self.steps += 1;
     }
 }
