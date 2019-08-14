@@ -70,12 +70,12 @@ impl Santa {
 
 impl Movement for Santa {
     fn up(&mut self) {
-        self.current_floor = self.current_floor + 1;
-        self.steps = self.steps + 1;
+        self.current_floor += 1;
+        self.steps += 1;
     }
 
     fn down(&mut self) {
-        self.current_floor = self.current_floor - 1;
-        self.steps = self.steps + 1;
+        self.current_floor += 1;
+        self.steps += 1;
     }
 }
