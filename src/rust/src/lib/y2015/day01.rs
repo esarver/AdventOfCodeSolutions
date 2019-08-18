@@ -1,4 +1,5 @@
 use crate::lib::common::logger;
+use crate::lib::common::task;
 
 #[test]
 fn final_floor_test_zero() {
@@ -36,6 +37,7 @@ fn first_at_floor_test_extra_steps() {
 }
 
 pub fn day01(input: &str) {
+    
     let mut santa = Santa::new(input.to_string(), None);
 
     logger::log_day("Day 01");

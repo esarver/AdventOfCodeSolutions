@@ -1,10 +1,20 @@
 
-struct Year {
+pub struct Year<'a> {
     year: String,
-    days: Vec<Day>,
+    days: Vec<Day<'a>>,
 }
-
-impl std::fmt::Display for Year {
+impl<'a> Year<'a> {
+    pub fn new(year_number: u16) -> Year<'a> {
+        Year {
+            year: format!("{:4}", year_number),
+            days: Vec::new(),
+        }
+    }
+    pub fn add_day(&mut self, new_day: Day<'a>) {
+        self.days.push(new_day);
+    }
+}
+impl<'a> std::fmt::Display for Year<'a> {
     fn fmt(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {
         let mut tmp = format!("\u{001b}[4m[{}]\u{001b}[0m\n", self.year);
         for day in &self.days {
@@ -14,23 +24,26 @@ impl std::fmt::Display for Year {
     }
 }
 
-struct Day {
+struct Day<'a> {
     day: String,
-    parts: Vec<Part>,
+    parts: Vec<Part<'a>>,
     input: String,
 }
 
-impl Day {
-    fn new(day_number: u8) -> Day {
+impl<'a> Day<'a> {
+    fn new(day_number: u8) -> Day<'a> {
         Day {
             day: format!("Day {:2}", day_number),
             parts: Vec::new(),
             input: "".to_string(),
         }
     }
+    fn add_part(&self, new_part: Part<'a>) {
+        self.parts.push(new_part);
+    }
 }
 
-impl std::fmt::Display for Day {
+impl<'a> std::fmt::Display for Day<'a> {
     fn fmt(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {
         let mut tmp = format!("|--- {}\n", self.day);
         for part in &self.parts {
@@ -42,25 +55,29 @@ impl std::fmt::Display for Day {
 
 trait Answer: std::fmt::Display {} 
 
-struct Part {
+struct FuncBoxStruct<'a>(Box<dyn FnMut() + 'a>);
+
+type FuncBox<'a> = FuncBoxStruct<'a>; 
+
+struct Part<'a> {
     part: String,
     answer: Vec<Box<dyn Answer>>,
-    closure: Box<dyn FnMut() -> ()>,
+    closure: FuncBox<'a> 
 }
 
-impl Part {
-    fn new<F>(part_id: &str, call_back: F) -> Part 
+impl<'a> Part<'a> {
+    fn new<F>(part_id: &str, call_back: FuncBox<'a>) -> Part<'a> 
         where F: FnMut() -> ()
     {
         Part {
             part: part_id.to_string(),
             answer: Vec::new(),
-            closure: Box::new(call_back),
+            closure: call_back,
         }
     }
 }
 
-impl std::fmt::Display for Part {
+impl<'a> std::fmt::Display for Part<'a> {
     fn fmt(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {
         if self.answer.len() > 1 {
             let mut tmp = format!("|---|--- {}\n", self.part);
