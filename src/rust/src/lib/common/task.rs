@@ -76,4 +76,5 @@ impl std::fmt::Display for Part {
 
 /*
 TODO: Each day should get it's own input
+TODO: Box a function for each part
 */
