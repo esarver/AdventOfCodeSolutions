@@ -1,10 +1,11 @@
 mod lib;
-use lib::common::input;
-use lib::common::logger;
-use lib::y2015::day01;
+use lib::y2015;
 fn main() {
-    let input_string = input::get_input("2015", "1");
+    let mut years = Vec::new();
+    years.push(y2015::y2015());
 
-    logger::log_year("2015");
-    day01::day01(&input_string);
+    for year in years {
+        println!("{}", year);
+    }
+
 }

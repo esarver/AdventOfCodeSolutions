@@ -1,4 +1,3 @@
-use crate::lib::common::logger;
 use crate::lib::common::task;
 
 #[test]
@@ -36,22 +35,38 @@ fn first_at_floor_test_extra_steps() {
     assert_eq!(santa.first_at_floor(-2), 2);
 }
 
-pub fn day01(input: &str) -> task::Day<'static> {
+pub fn day01(input: &str) -> task::Day {
     let mut day = task::Day::new(1);
-    day01.add_part(task::Part::new("A", {
-        FuncBoxStruct {
-            || {
+
+    day.add_part(
+        task::Part::new(
+            "Part A",
+            {
+                let mut return_vec = Vec::new();
                 let mut santa = Santa::new(input.to_string(), None);
-                santa.final_floor();
-            } 
-        }
-    }));
 
-    // let mut santa = Santa::new(input.to_string(), None);
+                return_vec.push(task::Answer::Signed(santa.final_floor()));
 
-    // logger::log_day("Day 01");
-    // logger::log_answer("Part A", santa.final_floor().to_string().as_str());
-    // logger::log_answer("Part B", santa.first_at_floor(-1).to_string().as_str());
+                return_vec
+            }
+        )
+    );
+
+    day.add_part(
+        task::Part::new(
+            "Part B", 
+            {
+                let mut return_vec = Vec::new();
+                let mut santa = Santa::new(input.to_string(), None);
+
+                return_vec.push(task::Answer::Unsigned(santa.first_at_floor(-1)));
+
+                return_vec
+               
+            }
+            )
+    );
+
     day
 }
 
