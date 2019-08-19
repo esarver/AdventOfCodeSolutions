@@ -36,13 +36,23 @@ fn first_at_floor_test_extra_steps() {
     assert_eq!(santa.first_at_floor(-2), 2);
 }
 
-pub fn day01(input: &str) {
-    
-    let mut santa = Santa::new(input.to_string(), None);
+pub fn day01(input: &str) -> task::Day<'static> {
+    let mut day = task::Day::new(1);
+    day01.add_part(task::Part::new("A", {
+        FuncBoxStruct {
+            || {
+                let mut santa = Santa::new(input.to_string(), None);
+                santa.final_floor();
+            } 
+        }
+    }));
 
-    logger::log_day("Day 01");
-    logger::log_answer("Part A", santa.final_floor().to_string().as_str());
-    logger::log_answer("Part B", santa.first_at_floor(-1).to_string().as_str());
+    // let mut santa = Santa::new(input.to_string(), None);
+
+    // logger::log_day("Day 01");
+    // logger::log_answer("Part A", santa.final_floor().to_string().as_str());
+    // logger::log_answer("Part B", santa.first_at_floor(-1).to_string().as_str());
+    day
 }
 
 trait Movement {

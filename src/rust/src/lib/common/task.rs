@@ -24,21 +24,21 @@ impl<'a> std::fmt::Display for Year<'a> {
     }
 }
 
-struct Day<'a> {
+pub struct Day<'a> {
     day: String,
     parts: Vec<Part<'a>>,
     input: String,
 }
 
 impl<'a> Day<'a> {
-    fn new(day_number: u8) -> Day<'a> {
+    pub fn new(day_number: u8) -> Day<'a> {
         Day {
             day: format!("Day {:2}", day_number),
             parts: Vec::new(),
             input: "".to_string(),
         }
     }
-    fn add_part(&self, new_part: Part<'a>) {
+    pub fn add_part(&self, new_part: Part<'a>) {
         self.parts.push(new_part);
     }
 }
@@ -53,20 +53,20 @@ impl<'a> std::fmt::Display for Day<'a> {
     }
 }
 
-trait Answer: std::fmt::Display {} 
+pub trait Answer: std::fmt::Display {} 
 
-struct FuncBoxStruct<'a>(Box<dyn FnMut() + 'a>);
+pub struct FuncBoxStruct<'a>(Box<dyn FnMut() + 'a>);
 
-type FuncBox<'a> = FuncBoxStruct<'a>; 
+pub type FuncBox<'a> = FuncBoxStruct<'a>; 
 
-struct Part<'a> {
+pub struct Part<'a> {
     part: String,
     answer: Vec<Box<dyn Answer>>,
     closure: FuncBox<'a> 
 }
 
 impl<'a> Part<'a> {
-    fn new<F>(part_id: &str, call_back: FuncBox<'a>) -> Part<'a> 
+    pub fn new<F>(part_id: &str, call_back: FuncBox<'a>) -> Part<'a> 
         where F: FnMut() -> ()
     {
         Part {
@@ -93,5 +93,4 @@ impl<'a> std::fmt::Display for Part<'a> {
 
 /*
 TODO: Each day should get it's own input
-TODO: Box a function for each part
 */
