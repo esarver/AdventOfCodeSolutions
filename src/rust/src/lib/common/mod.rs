@@ -1,2 +1,5 @@
 pub mod input;
-pub mod task;
+pub mod year;
+pub mod day;
+pub mod part;
+pub mod answer;

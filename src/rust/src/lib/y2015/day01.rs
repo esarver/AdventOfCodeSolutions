@@ -1,4 +1,6 @@
-use crate::lib::common::task;
+use crate::lib::common::day::Day;
+use crate::lib::common::part::Part;
+use crate::lib::common::answer::Answer;
 
 #[test]
 fn final_floor_test_zero() {
@@ -35,17 +37,17 @@ fn first_at_floor_test_extra_steps() {
     assert_eq!(santa.first_at_floor(-2), 2);
 }
 
-pub fn day01(input: &str) -> task::Day {
-    let mut day = task::Day::new(1);
+pub fn day01(input: &str) -> Day {
+    let mut day = Day::new(1);
 
     day.add_part(
-        task::Part::new(
+        Part::new(
             "Part A",
             {
                 let mut return_vec = Vec::new();
                 let mut santa = Santa::new(input.to_string(), None);
 
-                return_vec.push(task::Answer::Signed(santa.final_floor()));
+                return_vec.push(Answer::Signed(santa.final_floor()));
 
                 return_vec
             }
@@ -53,13 +55,13 @@ pub fn day01(input: &str) -> task::Day {
     );
 
     day.add_part(
-        task::Part::new(
+        Part::new(
             "Part B", 
             {
                 let mut return_vec = Vec::new();
                 let mut santa = Santa::new(input.to_string(), None);
 
-                return_vec.push(task::Answer::Unsigned(santa.first_at_floor(-1)));
+                return_vec.push(Answer::Unsigned(santa.first_at_floor(-1)));
 
                 return_vec
                
