@@ -19,7 +19,7 @@ impl Day {
 
 impl<'a> std::fmt::Display for Day {
     fn fmt(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {
-        let mut tmp = format!("|--- {}\n", self.day);
+        let mut tmp = format!("\u{001b}[0m\u{001b}[48;5;240m|--- {}\u{001b}[0m\n", self.day);
         for part in &self.parts {
            tmp.push_str(&format!("{}", part)) 
         }
