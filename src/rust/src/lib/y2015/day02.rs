@@ -3,7 +3,8 @@ use crate::lib::common::day::Day;
 use crate::lib::common::part::Part;
 
 #[test]
-fn part_a_test() {
+#[ignore]
+fn needed_surface_area_test() {
     let input = "2x2x2\n3x3x3\n";
     let presents: Vec<Present> = generate_presents(input);
     assert_eq!(presents.len(), 2);
@@ -19,7 +20,8 @@ fn part_a_test() {
 }
 
 #[test]
-fn part_b_test() {
+#[ignore]
+fn needed_ribbon_test() {
     let input = "2x2x2\n3x3x3\n";
     let presents: Vec<Present> = generate_presents(input);
     assert_eq!(presents.len(), 2);
@@ -34,14 +36,29 @@ fn part_b_test() {
     assert_eq!(total, 55);
 }
 
+#[test]
+fn part_a() {
+    use crate::lib::common::input;
+
+    let part_a = part_a_answer(input::get_input("2015", "2").as_str());
+    assert!(part_a == Answer::Unsigned(1_598_415));
+}
+
+#[test]
+fn part_b() {
+    use crate::lib::common::input;
+
+    let part_b = part_b_answer(input::get_input("2015", "2").as_str());
+    assert!(part_b == Answer::Unsigned(3_812_909));
+}
+
 pub fn day02(input: &str) -> Day {
     let mut day = Day::new(2);
 
     day.add_part({
         Part::new("Part A", {
             let mut ret = Vec::new();
-            let part = total_surface_area(generate_presents(input));
-            ret.push(Answer::Unsigned(part));
+            ret.push(part_a_answer(input));
 
             ret
         })
@@ -49,14 +66,21 @@ pub fn day02(input: &str) -> Day {
     day.add_part({
         Part::new("Part B", {
             let mut ret = Vec::new();
-            let part = total_ribbon_needed(generate_presents(input));
-            ret.push(Answer::Unsigned(part));
+            ret.push(part_b_answer(input));
 
             ret
         })
     });
 
     day
+}
+
+fn part_a_answer(input: &str) -> Answer {
+    Answer::Unsigned(total_surface_area(generate_presents(input)))
+}
+
+fn part_b_answer(input: &str) -> Answer {
+    Answer::Unsigned(total_ribbon_needed(generate_presents(input)))
 }
 
 fn generate_presents(input: &str) -> Vec<Present> {

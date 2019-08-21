@@ -1,4 +1,4 @@
-#[derive(Clone)]
+#[derive(PartialEq, Debug, Clone)]
 #[allow(dead_code)]
 pub enum Answer {
     None,

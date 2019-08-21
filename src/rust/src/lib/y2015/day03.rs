@@ -4,25 +4,27 @@ use crate::lib::common::part::Part;
 use std::collections::HashMap;
 
 #[test]
+#[ignore]
 fn santa_movement() {
     let mut santa = Santa::new();
-    assert_eq!(santa.current_location, Coordinates(0,0));
+    assert_eq!(santa.current_location, Coordinates(0, 0));
 
     santa.move_direction('^');
-    assert_eq!(santa.current_location, Coordinates(0,1));
+    assert_eq!(santa.current_location, Coordinates(0, 1));
 
     santa.move_direction('v');
-    assert_eq!(santa.current_location, Coordinates(0,0));
+    assert_eq!(santa.current_location, Coordinates(0, 0));
 
     santa.move_direction('>');
-    assert_eq!(santa.current_location, Coordinates(1,0));
+    assert_eq!(santa.current_location, Coordinates(1, 0));
 
     santa.move_direction('<');
-    assert_eq!(santa.current_location, Coordinates(0,0));
+    assert_eq!(santa.current_location, Coordinates(0, 0));
 }
 
 #[test]
-fn visited_houses(){
+#[ignore]
+fn visited_houses() {
     let mut santa = Santa::new();
     let input = "^>v<^"; // Should only be 4 total housed
 
@@ -33,42 +35,63 @@ fn visited_houses(){
     assert_eq!(santa.number_visited_houses(), 4);
 }
 
+#[test]
+fn part_a() {
+    use crate::lib::common::input;
+    let part_a = part_a_answer(input::get_input("2015", "3").as_str());
+    assert_eq!(part_a, Answer::Unsigned(2081));
+}
+
+#[test]
+fn part_b() {
+    use crate::lib::common::input;
+    let part_b = part_b_answer(input::get_input("2015", "3").as_str());
+    assert_eq!(part_b, Answer::Unsigned(2341));
+}
+
 pub fn day03(input: &str) -> Day {
     let mut day = Day::new(3);
 
     day.add_part({
         Part::new("Part A", {
             let mut ret = Vec::new();
-            let mut santa = Santa::new();
-            for movement in input.chars() {
-                santa.move_direction(movement);
-            }
-            ret.push(Answer::Unsigned(santa.number_visited_houses()));
-
+            ret.push(part_a_answer(input));
             ret
         })
     });
     day.add_part({
         Part::new("Part B", {
             let mut ret = Vec::new();
-            let mut santa = Santa::new();
-            let mut robo_santa = Santa::new();
-
-            for (i, movement) in input.chars().enumerate() {
-                if (i % 2) == 0 {
-                    santa.move_direction(movement);
-                } else {
-                    robo_santa.move_direction(movement);
-                }
-            }
-
-            ret.push(Answer::Unsigned(get_unique_visited(&santa, &robo_santa)));
+            ret.push(part_b_answer(input));
 
             ret
         })
     });
 
     day
+}
+
+fn part_a_answer(input: &str) -> Answer {
+    let mut santa = Santa::new();
+    for movement in input.chars() {
+        santa.move_direction(movement);
+    }
+    Answer::Unsigned(santa.number_visited_houses())
+}
+
+fn part_b_answer(input: &str) -> Answer {
+    let mut santa = Santa::new();
+    let mut robo_santa = Santa::new();
+
+    for (i, movement) in input.chars().enumerate() {
+        if (i % 2) == 0 {
+            santa.move_direction(movement);
+        } else {
+            robo_santa.move_direction(movement);
+        }
+    }
+
+    Answer::Unsigned(get_unique_visited(&santa, &robo_santa))
 }
 
 fn get_unique_visited(santa_1: &Santa, santa_2: &Santa) -> u64 {
@@ -97,18 +120,34 @@ impl Santa {
     }
 
     fn move_direction(&mut self, direction: char) {
-        
         match direction {
-            '^' => self.current_location = Coordinates(self.current_location.0, self.current_location.1 + 1),
-            '>' => self.current_location = Coordinates(self.current_location.0 + 1, self.current_location.1),
-            'v' => self.current_location = Coordinates(self.current_location.0, self.current_location.1 - 1),
-            '<' => self.current_location = Coordinates(self.current_location.0 - 1, self.current_location.1),
+            '^' => {
+                self.current_location =
+                    Coordinates(self.current_location.0, self.current_location.1 + 1)
+            }
+            '>' => {
+                self.current_location =
+                    Coordinates(self.current_location.0 + 1, self.current_location.1)
+            }
+            'v' => {
+                self.current_location =
+                    Coordinates(self.current_location.0, self.current_location.1 - 1)
+            }
+            '<' => {
+                self.current_location =
+                    Coordinates(self.current_location.0 - 1, self.current_location.1)
+            }
             _ => panic!("Unknown input in file!"),
         }
 
         match self.visited_locations.get_mut(&self.current_location) {
-            Some(x) => {*x += 1;}
-            _ => {self.visited_locations.insert(self.current_location.clone(), 1);},
+            Some(x) => {
+                *x += 1;
+            }
+            _ => {
+                self.visited_locations
+                    .insert(self.current_location.clone(), 1);
+            }
         }
     }
 

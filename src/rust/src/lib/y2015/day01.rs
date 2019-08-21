@@ -3,6 +3,7 @@ use crate::lib::common::part::Part;
 use crate::lib::common::answer::Answer;
 
 #[test]
+#[ignore]
 fn final_floor_test_zero() {
     let mut santa = Santa::new("((()))".to_string(), None);
 
@@ -10,6 +11,7 @@ fn final_floor_test_zero() {
 }
 
 #[test]
+#[ignore]
 fn final_floor_test_positive() {
     let mut santa = Santa::new("((()))((((".to_string(), None);
 
@@ -17,6 +19,7 @@ fn final_floor_test_positive() {
 }
 
 #[test]
+#[ignore]
 fn final_floor_test_negative() {
     let mut santa = Santa::new("((()))))))))".to_string(), None);
 
@@ -24,6 +27,7 @@ fn final_floor_test_negative() {
 }
 
 #[test]
+#[ignore]
 fn first_at_floor_test() {
     let mut santa = Santa::new("((())))".to_string(), None);
 
@@ -31,10 +35,27 @@ fn first_at_floor_test() {
 }
 
 #[test]
+#[ignore]
 fn first_at_floor_test_extra_steps() {
     let mut santa = Santa::new("))))".to_string(), None);
 
     assert_eq!(santa.first_at_floor(-2), 2);
+}
+
+#[test]
+fn part_a() {
+    use crate::lib::common::input;
+
+    let part_a = part_a_answer(input::get_input("2015", "1").as_str());
+    assert!(part_a == Answer::Signed(138));
+}
+
+#[test]
+fn part_b() {
+    use crate::lib::common::input;
+
+    let part_b = part_b_answer(input::get_input("2015", "1").as_str());
+    assert!(part_b == Answer::Unsigned(1771));
 }
 
 pub fn day01(input: &str) -> Day {
@@ -45,9 +66,8 @@ pub fn day01(input: &str) -> Day {
             "Part A",
             {
                 let mut return_vec = Vec::new();
-                let mut santa = Santa::new(input.to_string(), None);
 
-                return_vec.push(Answer::Signed(santa.final_floor()));
+                return_vec.push(part_a_answer(input));
 
                 return_vec
             }
@@ -59,9 +79,8 @@ pub fn day01(input: &str) -> Day {
             "Part B", 
             {
                 let mut return_vec = Vec::new();
-                let mut santa = Santa::new(input.to_string(), None);
 
-                return_vec.push(Answer::Unsigned(santa.first_at_floor(-1)));
+                return_vec.push(part_b_answer(input));
 
                 return_vec
                
@@ -70,6 +89,20 @@ pub fn day01(input: &str) -> Day {
     );
 
     day
+}
+
+fn part_a_answer(input: &str) -> Answer {
+
+    let mut santa = Santa::new(input.to_string(), None);
+    
+    Answer::Signed(santa.final_floor())
+}
+
+fn part_b_answer(input: &str) -> Answer {
+
+    let mut santa = Santa::new(input.to_string(), None);
+    
+    Answer::Unsigned(santa.first_at_floor(-1))
 }
 
 trait Movement {
