@@ -37,7 +37,7 @@ fn part_a() {
 fn part_b() {
     use crate::lib::common::input;
     let part_b = part_b_answer(input::get_input("2015", "4").as_str());
-    assert_eq!(part_b, Answer::None);
+    assert_eq!(part_b, Answer::Unsigned(9_958_218));
 }
 
 pub fn day04(input: &str) -> Day {
