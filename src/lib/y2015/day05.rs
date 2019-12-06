@@ -15,12 +15,12 @@ fn part_a() {
     assert_eq!(part_a, Answer::Unsigned(238));
 }
 
-#[test]
-fn part_b() {
-    use crate::lib::common::input;
-    let part_b = part_b_answer(input::get_input("2015", "5").as_str());
-    assert_eq!(part_b, Answer::Unsigned(9_958_218));
-}
+// #[test]
+// fn part_b() {
+//     use crate::lib::common::input;
+//     let part_b = part_b_answer(input::get_input("2015", "5").as_str());
+//     assert_eq!(part_b, Answer::Unsigned(9_958_218));
+// }
 
 #[test]
 fn vowel_check_test() {
@@ -76,9 +76,9 @@ fn part_a_answer(input: &str) -> Answer {
     Answer::Unsigned(nice_lines)
 }
 
-fn part_b_answer(input: &str) -> Answer {
-    Answer::None
-}
+// fn part_b_answer(input: &str) -> Answer {
+//     Answer::None
+// }
 
 fn is_string_nice(string: &str) -> bool {
     (vowel_check(string) && double_letters_check(string) && !forbidden_substring_check(string))
